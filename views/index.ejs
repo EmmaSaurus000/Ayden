@@ -5,6 +5,11 @@
 </head>
 <body>
 
+<!-- express if you set locals on request-->
+<% if (locals.session.email) { %>
+    <h3>Logged in</h3>    
+<% } else { %>
+
 <h1>Register</h1>
 <form method="post" action="/user">
     <input name="email" type="text"/>
@@ -18,6 +23,8 @@
     <input name="password" type="password"/>
     <input type="submit"/>
 </form>
+
+<% } %>
 
 </body>
 </html> 

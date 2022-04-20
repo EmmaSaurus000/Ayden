@@ -11,7 +11,11 @@ router.post('/', (req, res) => {    // router receives req and passes to request
 
 router.post('/log_in', (req, res) => {
     const {email, password } = req.body; // alt req.body.password
-    User.log_in(email, password);
+    let is_correct_details = User.log_in(email, password);
+    if (is_correct_details) {
+        // here is where session is set
+        req.session.email = email;
+    }
     res.redirect('/');
 })
 
