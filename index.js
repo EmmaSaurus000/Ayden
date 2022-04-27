@@ -33,7 +33,7 @@ const pool = new Pool({
     //let correct_pwd = await bcrypt.compare('passwordmcpassword', hash);
     //console.log(correct_pwd);
     
-    await postgres.db().query('CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, pwd TEXT);');
+    await postgres.db().query('CREATE TABLE IF NOT EXISTS users (email TEXT PRIMARY KEY, pwd TEXT, note TEXT);');
     // await pool.query('INSERT INTO first_table VALUES($1);', [numb]);
     //let res = await pool.query('SELECT numbers FROM first_table where numbers = $1;', [numb]);
     //console.log(res);
@@ -51,18 +51,16 @@ const pool = new Pool({
         resave: false,
         saveUninitialized: true,
         // http only for dev: change to true for prod  
-        cookie: {secure: config.is_production},
+        cookie: {secure: config.is_production}, // TODO: adding in session expiry
     }))
     // see notes on next
     app.use((req, res, next) => {
         res.locals.session = req.session;
-        console.log(req.session);
+        // console.log(req.session);
         next();
     })
     app.use('/', routes);// routes are middleware! all requests sent via here
-    app.get('/', (req, res) => {
-        res.render('index');
-    });
+
 
     app.listen(28000, () => {console.log('listening')});
 })();

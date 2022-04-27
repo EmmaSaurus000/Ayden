@@ -9,7 +9,7 @@ async function register(email, pwd) {
     console.log(email);
     let is_email_unique = ! await is_email_registered(email);
     if (is_email_unique) {
-        await db.query('INSERT INTO users values($1, $2)', [email, hash]);
+        await db.query('INSERT INTO users values($1, $2, $3)', [email, hash, 'Hello world']);
     } else {
         throw "Email already in use";
     }
@@ -36,4 +36,13 @@ async function log_in(email, pwd) {
     return is_pwd_correct;
 }
 
-module.exports = {register, log_in};
+async function get(email){
+    const res = await db.query('SELECT * FROM users WHERE email = $1;', [email]);
+    return res.rows[0];
+}
+
+async function update_note(email, note){
+    const res = await db.query('UPDATE users SET note = $1 WHERE email = $2;', [note, email]);
+}
+
+module.exports = {register, log_in, get, update_note};

@@ -19,4 +19,9 @@ router.post('/log_in', (req, res) => {
     res.redirect('/');
 })
 
+router.post('/set_note', (req, res) => {
+    User.update_note(req.session.email, req.body.note);
+    res.redirect('/dashboard');
+});
+
 module.exports = router; //

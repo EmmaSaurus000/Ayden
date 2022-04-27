@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h3>Edit note</h3>    
+
+<form method="post" action="/user/set_note">
+    <input name="note" type="text"/>
+    <input type="submit"/>
+</form>
+
+<p> <%- note %></p> <!-- this evals even if not shown -->
+
+
+</body>
+</html> 
