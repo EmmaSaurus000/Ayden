@@ -8,11 +8,18 @@
 <h3>Edit note</h3>    
 
 <form method="post" action="/user/set_note">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <input name="note" type="text"/>
     <input type="submit"/>
 </form>
 
-<p> <%- note %></p> <!-- this evals even if not shown -->
+<p> <%= note %></p> <!-- - this evals even if not shown = escapes--> 
+
+<form method="post" action="/user/upload"> <!-- pre-spec upload endpoint; not folder -->
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="file" name="userFile">
+    <input type="submit">
+  </form>
 
 
 </body>

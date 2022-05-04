@@ -5,9 +5,7 @@ const bcrypt = require('bcrypt');
 
 async function register(email, pwd) {
     let hash = await bcrypt.hash(pwd, config.hash_rounds);
-    console.log(hash);
-    console.log(email);
-    let is_email_unique = ! await is_email_registered(email);
+    let is_email_unique = !(await is_email_registered(email)); //Q? ! 
     if (is_email_unique) {
         await db.query('INSERT INTO users values($1, $2, $3)', [email, hash, 'Hello world']);
     } else {
@@ -22,17 +20,13 @@ async function is_email_registered(email) {
     return does_email_exist;
 }
 
-
 async function log_in(email, pwd) {
     const res = await db.query('SELECT pwd FROM users WHERE email = $1;', [email]);
     if ( res.rows.length <1) {
         throw 'No account with that email';
     }
     const account = res.rows[0];
-    console.log(account);
-    console.log(pwd);
     let is_pwd_correct = await bcrypt.compare(pwd, account.pwd);
-    console.log(is_pwd_correct);
     return is_pwd_correct;
 }
 
